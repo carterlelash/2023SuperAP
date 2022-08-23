@@ -1,25 +1,42 @@
 package pkg;
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class BBoard {		// This is your main file that connects all classes.
 	// Think about what your global variables need to be.
 
+	private ArrayList <User> userList;
+	private String ttl;
+
 	// Default constructor that creates a board with a defaulttitle, empty user and message lists,
 	// and no current user
 	public BBoard() {
-		
+		this.ttl = "New BBoard";
 	}
 
 	// Same as the default constructor except it sets the title of the board
 	public BBoard(String ttl) {	
+		this.ttl = ttl;
 	}
 
 	// Gets a filename of a file that stores the user info in a given format (users.txt)
 	// Opens and reads the file of all authorized users and passwords
 	// Constructs a User object from each name/password pair, and populates the userList ArrayList.
 	public void loadUsers(String inputFile) throws FileNotFoundException {
-
+		Scanner sc = new Scanner(inputFile);
+		while (sc.hasNextLine()) {
+			String currentLine = sc.nextLine();
+			if (currentLine.equals("")) {
+				User newUser = new User();
+			}
+			else {
+				User newUser = new User(currentLine.substring(0,currentLine.indexOf(" ")),currentLine.substring(currentLine.indexOf(" ") + 1));
+				userList.add(newUser);
+			}
+		}
+		
 	}
 
 	// Asks for and validates a user/password. 

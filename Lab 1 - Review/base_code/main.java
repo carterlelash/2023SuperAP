@@ -1,6 +1,6 @@
-import pkg.*;
-import java.util.*;
-import java.io.*;       
+import java.io.FileNotFoundException;
+
+import pkg.BBoard;       
 
 class main {        // This should be all that is in your main.java file.
 	public static void main(String args[]) throws FileNotFoundException {
