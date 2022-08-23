@@ -9,6 +9,8 @@ public class Message {
 	private String bod;
 	private int i;
 
+	private ArrayList <Message> messagesList = new ArrayList <Message> ();
+
 	// Default Constructor
 	public Message() {
 		this.auth = "";
@@ -61,7 +63,7 @@ public class Message {
 
 	// Adds a child pointer to the parent's childList.
 	public void addChild(Message child){
-		
+		messagesList.add(child);
 	}
 
 }
