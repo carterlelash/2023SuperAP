@@ -8,6 +8,7 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Think about what your global variables need to be.
 
 	public ArrayList <User> userList = new ArrayList <User> ();
+	public ArrayList <Message> messageList = new ArrayList <Message> ();
 	private String ttl;
 	private String signedInUser;
 	private String signedInPassword;
@@ -35,7 +36,6 @@ public class BBoard {		// This is your main file that connects all classes.
 			}
 			else {
 			 	User newUser = new User(currentLine.substring(0,currentLine.indexOf(" ")),currentLine.substring(currentLine.indexOf(" ") + 1));
-			 	//System.out.println(currentLine.substring(0,currentLine.indexOf(" ")) + currentLine.substring(currentLine.indexOf(" ") + 1));
 				userList.add(newUser);
 			}
 		}
@@ -56,7 +56,6 @@ public class BBoard {		// This is your main file that connects all classes.
 		System.out.println("Enter your password: ");
 		String userInputB = sc.nextLine();
 
-		String totalInput = userInputA + " " + userInputB;
 		boolean verified = false;
 		for (int y = 0; y < userList.size(); y++) {
 			
@@ -87,22 +86,41 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Note: if login() did not set a valid currentUser, function must immediately return without showing menu
 	public void run(){
 		Scanner sc = new Scanner(System.in);
+	for (int y = 0; y < 10; y++) {
+		System.out.println("");
 		System.out.println("Display Messages ('D' or 'd')");
 		System.out.println("Add New Topic ('N' or 'n')");
 		System.out.println("Add Reply ('R' or 'r')");
 		System.out.println("Change Password ('P' or 'p')");
 		System.out.println("Quit ('Q' or 'q')");
+		System.out.println("");
 		String choice = sc.nextLine();
-		if (choice.equals("Q") || choice.equals("Q")) {
-			return;
+		System.out.println("");
+		if (choice.equals("N") || choice.equals("n")) {
+			addTopic();
 		}
+		if (choice.equals("R") || choice.equals("r")) {
+			addReply();
+		}
+		if (choice.equals("D") || choice.equals("d")) {
+			display();
+		}
+	}
 	}
 
 	// Traverse the BBoard's message list, and invote the print function on Topic objects ONLY
 	// It will then be the responsibility of the Topic object to invoke the print function recursively on its own replies
 	// The BBoard display function will ignore all reply objects in its message list
 	private void display(){
-
+		// for (int y = 0; y < messageList.size(); y++) {
+		// 	messageList.get(y).print(2);
+		// }
+		for (int y = 0; y < messageList.size(); y++) {
+			Message blah = messageList.get(y);
+			System.out.println("Message FUCK YOU " + blah.getId() + ": Topic: " + "\"" + blah.getSubject() + "\"");
+			System.out.println("Body: " + "\"" + blah.getBody() + "\"");
+			blah.print(0);
+		}
 	}
 
 
@@ -121,7 +139,14 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Once the Topic has been constructed, add it to the messageList
 	// This should invoke your inheritance of Topic to Message
 	private void addTopic(){
-
+		Scanner sc = new Scanner (System.in);
+		System.out.println("Create your topic: \nSubject: ");
+		String subject = sc.nextLine();
+		System.out.println("Body: ");
+		String body = sc.nextLine();
+		System.out.println("");
+		messageList.add(new Topic(signedInUser,subject,body,messageList.size()+1));
+		
 	}
 
 	// This function asks the user to enter a reply to a given Message (which may be either a Topic or a Reply, so we can handle nested replies).
@@ -152,8 +177,15 @@ public class BBoard {		// This is your main file that connects all classes.
 	// The Reply's constructor should set the Reply's subject to "Re: " + its parent's subject.
 	// Call the addChild function on the parent Message to push back the new Message (to the new Reply) to the parent's childList ArrayList.
 	// Finally, push back the Message created to the BBoard's messageList. 
-	// Note: When the user chooses to return to the menu, do not call run() again - just return fro mthis addReply function. 
+	// Note: When the user chooses to return to the menu, do not call run() again - just return from this addReply function. 
 	private void addReply(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Number of the post to reply to: ");
+		int topicIdtoReply = sc.nextInt();
+		String jkl = sc.nextLine();
+		System.out.println("Body: ");
+		String replyBody = sc.nextLine();
+		messageList.get(topicIdtoReply-1).addChild(new Reply(signedInUser,"",replyBody,messageList.size()+1));
 
 	}
 

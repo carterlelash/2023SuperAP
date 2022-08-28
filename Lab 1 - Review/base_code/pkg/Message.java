@@ -9,7 +9,7 @@ public class Message {
 	private String bod;
 	private int i;
 
-	private ArrayList <Message> messagesList = new ArrayList <Message> ();
+	private ArrayList <Message> messageList = new ArrayList <Message> ();
 
 	// Default Constructor
 	public Message() {
@@ -38,7 +38,21 @@ public class Message {
 	// Note: Each indentation increment represents 2 spaces. e.g. if indentation ==  1, the reply should be indented 2 spaces, 
 	// if it's 2, indent by 4 spaces, etc. 
 	public void print(int indentation){
-		
+		for (int y = 0; y < messageList.size(); y++) {
+			Message messB = messageList.get(y);
+		if (this.isReply()) {
+			for (int x = 0; x < indentation; x++) {
+				System.out.print(" ");
+			}
+		}
+			System.out.println("Message Imagine Dragons " + messB.getId() + ": " + messB.getBody() + ". This post is a reply: " + messB.isReply());
+		if (this.isReply()) {
+			for (int x = 0; x < indentation; x++) {
+				System.out.print(" ");
+			}
+			System.out.println("Body: " + messB.bod);
+		}
+	}
 	}
 
 	// Default function for inheritance
@@ -60,10 +74,17 @@ public class Message {
 	public int getId(){
 		return this.i;
 	}
+	public String getBody() {
+		return this.bod;
+	}
 
 	// Adds a child pointer to the parent's childList.
 	public void addChild(Message child){
-		messagesList.add(child);
+		messageList.add(child);
+		for (int y = 0; y < messageList.size(); y++) {
+			Message a = messageList.get(y);	
+			System.out.println("Message or blah " + a.getId() + ": " + a.getBody());
+		}
 	}
 
 }
