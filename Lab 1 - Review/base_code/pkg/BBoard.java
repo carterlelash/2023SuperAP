@@ -12,6 +12,7 @@ public class BBoard {		// This is your main file that connects all classes.
 	private String ttl;
 	private String signedInUser;
 	private String signedInPassword;
+	private int highestId = 1;
 
 	// Default constructor that creates a board with a defaulttitle, empty user and message lists,
 	// and no current user
@@ -86,7 +87,7 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Note: if login() did not set a valid currentUser, function must immediately return without showing menu
 	public void run(){
 		Scanner sc = new Scanner(System.in);
-	for (int y = 0; y < 10; y++) {
+	for (int y = 0; y < 20; y++) {
 		System.out.println("");
 		System.out.println("Display Messages ('D' or 'd')");
 		System.out.println("Add New Topic ('N' or 'n')");
@@ -105,6 +106,12 @@ public class BBoard {		// This is your main file that connects all classes.
 		if (choice.equals("D") || choice.equals("d")) {
 			display();
 		}
+		if (choice.equals("P") || choice.equals("p")) {
+			setPassword();
+		}
+		if (choice.equals("Q") || choice.equals("q")) {
+			return;
+		}
 	}
 	}
 
@@ -117,9 +124,10 @@ public class BBoard {		// This is your main file that connects all classes.
 		// }
 		for (int y = 0; y < messageList.size(); y++) {
 			Message blah = messageList.get(y);
-			System.out.println("Message FUCK YOU " + blah.getId() + ": Topic: " + "\"" + blah.getSubject() + "\"");
+			System.out.println("");
+			System.out.println("Message " + blah.getId() + ": Topic: " + "\"" + blah.getSubject() + "\"");
 			System.out.println("Body: " + "\"" + blah.getBody() + "\"");
-			blah.print(0);
+			blah.print(2);
 		}
 	}
 
@@ -146,7 +154,7 @@ public class BBoard {		// This is your main file that connects all classes.
 		String body = sc.nextLine();
 		System.out.println("");
 		messageList.add(new Topic(signedInUser,subject,body,messageList.size()+1));
-		
+		System.out.println("Topic " + messageList.size() + " added!");
 	}
 
 	// This function asks the user to enter a reply to a given Message (which may be either a Topic or a Reply, so we can handle nested replies).
@@ -185,8 +193,9 @@ public class BBoard {		// This is your main file that connects all classes.
 		String jkl = sc.nextLine();
 		System.out.println("Body: ");
 		String replyBody = sc.nextLine();
-		messageList.get(topicIdtoReply-1).addChild(new Reply(signedInUser,"",replyBody,messageList.size()+1));
-
+		messageList.get(topicIdtoReply-1).addChild(new Reply(signedInUser,"",replyBody,highestId+1));
+		highestId++;
+		System.out.println("Message " + highestId + " added!");
 	}
 
 	// This function allows the user to change their current password.
@@ -197,7 +206,23 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Any password is allowed except 'c' or 'C' for allowing the user to quit out to the menu. 
 	// Once entered, the user will be told "Password Accepted." and returned to the menu.
 	private void setPassword(){
-		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter your current password: ");
+		String oldPass = sc.nextLine();
+		while (!oldPass.equals(signedInPassword)) {
+			System.out.println("Incorrect. Try again: ");
+			oldPass = sc.nextLine();
+			if (oldPass.equals("C") || oldPass.equals("c")) {
+				return;
+			}
+		}
+		System.out.println("Enter your new password: ");
+		String newPass = sc.nextLine();
+		if (newPass.equals("C") || newPass.equals("c")) {
+			return;
+		}
+		signedInPassword = newPass;
+		System.out.println("Password saved!");
 	}
 
 }

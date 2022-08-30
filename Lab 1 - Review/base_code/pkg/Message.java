@@ -38,26 +38,32 @@ public class Message {
 	// Note: Each indentation increment represents 2 spaces. e.g. if indentation ==  1, the reply should be indented 2 spaces, 
 	// if it's 2, indent by 4 spaces, etc. 
 	public void print(int indentation){
-		for (int y = 0; y < messageList.size(); y++) {
-			Message messB = messageList.get(y);
-		if (this.isReply()) {
+		Message messB = messageList.get((indentation/2)-1);
+		if (messB.isReply()) {
 			for (int x = 0; x < indentation; x++) {
 				System.out.print(" ");
 			}
 		}
-			System.out.println("Message Imagine Dragons " + messB.getId() + ": " + messB.getBody() + ". This post is a reply: " + messB.isReply());
-		if (this.isReply()) {
-			for (int x = 0; x < indentation; x++) {
+			System.out.print("Reply " + messB.getId() + ": ");
+			for (int h = 0; h < indentation/2; h++) {
+				System.out.print("Re: ");
+			}
+			System.out.println("\"" + messB.getBody() + "\"");
+		if (messB.isReply()) {
+			for (int g = 0; g < indentation+2; g++) {
 				System.out.print(" ");
 			}
-			System.out.println("Body: " + messB.bod);
 		}
-	}
+		if (((indentation+2)/2)-1 < messageList.size()) {
+			print(indentation+2);
+		}
 	}
 
 	// Default function for inheritance
 	public boolean isReply(){
-		if (this.getClass().equals("Reply")) {
+		String waht = this.getClass().getName();
+		//System.out.println("ooga: " + waht);
+		if (waht.contains("Reply")) {
 			return true;
 		}
 		else {
@@ -83,7 +89,7 @@ public class Message {
 		messageList.add(child);
 		for (int y = 0; y < messageList.size(); y++) {
 			Message a = messageList.get(y);	
-			System.out.println("Message or blah " + a.getId() + ": " + a.getBody());
+			//System.out.println("Message " + a.getId() + ": " + a.getBody());
 		}
 	}
 

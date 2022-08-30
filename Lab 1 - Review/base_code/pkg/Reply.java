@@ -16,7 +16,9 @@ public class Reply extends Message {
 
 	// Returns if this is a reply (true)
 	public boolean isReply(){
-		if (this.getClass().equals("Reply")) {
+		String waht = this.getClass().getName();
+		//System.out.println("ooga: " + waht);
+		if (waht.contains("Reply")) {
 			return true;
 		}
 		else {
